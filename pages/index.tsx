@@ -39,14 +39,12 @@ type DeviceListProps = {
 	}
 }
 
-
 export const getStaticProps: GetStaticProps<DeviceListProps> = async () => {
 	const data = await fetch('https://static.ui.com/fingerprint/ui/public.json').then(res => res.json()) as DeviceListProps['data'];
 	return {
 		props: { data }
 	};
 };
-
 
 export default function Home({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
 	const [searchTerm, setSearchTerm] = useState('');
