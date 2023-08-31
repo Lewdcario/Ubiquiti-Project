@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { GetStaticProps, InferGetStaticPropsType  } from 'next';
-import { FaThLarge, FaList } from 'react-icons/fa';
+import TableLabel from '../components/TableLabel';
+import Button from '../components/Button';
+import Search from '../components/Search';
+import Anchor from '../components/Anchor';
 
+// TODO: Move typings out
 type Device = {
 	sysids: Array<string>,
 	icon: {
@@ -39,6 +43,9 @@ type DeviceListProps = {
 	}
 }
 
+// TODO: Handle errors
+// TODO: Pagination + caching, think about speed and optimisation
+// If the list changes more regularly then GetServerSideProps would be preferable here
 export const getStaticProps: GetStaticProps<DeviceListProps> = async () => {
 	const data = await fetch('https://static.ui.com/fingerprint/ui/public.json').then(res => res.json()) as DeviceListProps['data'];
 	return {
@@ -46,6 +53,7 @@ export const getStaticProps: GetStaticProps<DeviceListProps> = async () => {
 	};
 };
 
+// TODO: Use the themes better instead of manually applying classes - light and dark themes. dark: / light: selector might do it tho
 export default function Home({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
@@ -64,49 +72,26 @@ export default function Home({ data }: InferGetStaticPropsType<typeof getStaticP
 		currentPage * itemsPerPage
 	);
 
-
 	// TODO: handle the icon schema chanigng. Maybe provide a max for the icon wxh and find that in the resolutions array, then default to the first one
 	const imgURL = (device: Device) => `https://static.ui.com/fingerprint/ui/icons/${device.icon.id}_${device.icon.resolutions[1][0]}x${device.icon.resolutions[1][1]}.png`;
 	const image = (device: Device, w: number, h: number) => <Image src={imgURL(device)} alt={device.product.name} width={w} height={h} />;
 
 	return (
-		<div className="flex h-screen bg-gray-100">
-			<div className="flex-1 p-10">
-				<header className="flex justify-between items-center mb-8">
-					<div className="flex items-center">
-						<input
-							type="text"
-							className="p-2 border rounded"
-							placeholder="Search..."
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-						/>
-						<span className="ml-4 text-lg">{filteredDevices.length} Devices</span>
-					</div>
+		<div className='flex h-screen bg-gray-100'>
+			<div className='flex-1 p-10'>
+				<header className='flex justify-between items-center mb-8'>
+					<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} setViewMode={setViewMode} />
 
-					<div className="flex items-center">
-						<Image src={data.devices[0].icon.resolutions[0]} alt="Row View" className="w-6 h-6 mr-2" />
-						<Image src={data.devices[0].icon.resolutions[0]} alt="Grid View" className="w-6 h-6" />
-					</div>
-
-					<div className="flex justify-between items-center mb-4">
-						<input 
-							type="text" 
-							placeholder="Search..."
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-						/>
-						<div>
-							<FaThLarge onClick={() => setViewMode('grid')} />
-							<FaList onClick={() => setViewMode('table')} />
-						</div>
+					<div className='flex items-center'>
+						<Image src={data.devices[0].icon.resolutions[0]} alt='Row View' className='w-6 h-6 mr-2' />
+						<Image src={data.devices[0].icon.resolutions[0]} alt='Grid View' className='w-6 h-6' />
 					</div>
 
 				</header>
 
-				<main className="mt-10">
+				<main className='mt-10'>
 					{viewMode === 'table' ? (
-						<table className="w-full">
+						<table className='w-full'>
 							<thead>
 								<tr>
 									<th className='w-10'></th>
@@ -117,19 +102,19 @@ export default function Home({ data }: InferGetStaticPropsType<typeof getStaticP
 							<tbody>
 								{devicesToShow.map((device) => (
 									<tr key={device.id}>
-										<td>
+										<TableLabel>
 											{image(device, 24, 24)}
-										</td>
-										<td>{device.product.name}</td>
-										<td>{device.line.name}</td>
+										</TableLabel>
+										<TableLabel>{device.line.name}</TableLabel>
+										<TableLabel><Anchor href='#'>{device.product.name}</Anchor></TableLabel>
 									</tr>
 								))}
 							</tbody>
 						</table>
 					) : (
-						<div className="grid grid-cols-3 gap-4">
+						<div className='grid grid-cols-3 gap-4'>
 							{devicesToShow.map((device) => (
-								<div key={device.id} className="card">
+								<div key={device.id} className='card'>
 									{image(device, 48, 48)}
 									<h3>{device.product.name}</h3>
 									<p>{device.line.name}</p>
@@ -138,18 +123,18 @@ export default function Home({ data }: InferGetStaticPropsType<typeof getStaticP
 						</div>
 					)}
 
-					<footer className="mt-8">
-						<button
+					<footer className='mt-8'>
+						<Button
 							onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)}
 						>
               Previous
-						</button>
-						<span className="mx-2">{currentPage}</span>
-						<button
+						</Button>
+						<span className='mx-2'>{currentPage}</span>
+						<Button
 							onClick={() => setCurrentPage(currentPage < pageCount ? currentPage + 1 : currentPage)}
 						>
               Next
-						</button>
+						</Button>
 					</footer>
 				</main>
 			</div>

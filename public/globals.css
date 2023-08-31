@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Core Sans';
+  src: url('/fonts/core-sans.otf') format('opentype');
+}
+
 :root {
   --foreground-rgb: black;
   --background-start-rgb: 214, 219, 220;
@@ -10,18 +15,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: white;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+	--foreground-rgb: white;
+	--background-start-rgb: 0, 0, 0;
+	--background-end-rgb: 0, 0, 0;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	  to bottom,
+	  transparent,
+	  rgb(var(--background-end-rgb))
+	)
+	rgb(var(--background-start-rgb));
 }

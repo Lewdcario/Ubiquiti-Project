@@ -1,4 +1,4 @@
-import '../public/globals.css';
+import '/public/globals.css';
 
 import React from 'react';
 import Head from 'next/head';

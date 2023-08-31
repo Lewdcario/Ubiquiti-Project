@@ -67,6 +67,7 @@ module.exports = {
 				'before': false,
 				'after': true
 			}
-		]
+		],
+		'jsx-quotes': ['error', 'prefer-single']
 	}
 };
