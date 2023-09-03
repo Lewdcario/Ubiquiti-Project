@@ -2,9 +2,12 @@ import type { Config } from 'tailwindcss';
 
 const colors = {
 	'grey-dark-1': '#838691',
+	'grey-dark-2': '#50565E',
 	'grey-light-1': '#B6B9C4',
 	'blue-dark-1': '#006FFF',
 	'grey-light-2': '#EDEDF0',
+	'grey-light-3': '#808893',
+	'grey-light-4': '#F4F5F6',
 	'blue-dark-2': '#0059CC',
 	'dark': '#212327'
 };

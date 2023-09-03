@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { GetStaticProps, InferGetStaticPropsType  } from 'next';
+import { FaThLarge, FaList } from 'react-icons/fa';
 import TableLabel from '../components/TableLabel';
 import Button from '../components/Button';
 import Search from '../components/Search';
@@ -80,11 +81,11 @@ export default function Home({ data }: InferGetStaticPropsType<typeof getStaticP
 		<div className='flex h-screen bg-gray-100'>
 			<div className='flex-1 p-10'>
 				<header className='flex justify-between items-center mb-8'>
-					<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} setViewMode={setViewMode} />
+					<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} suggestions={data.devices.map(d => ({ deviceName: d.product.name, productName: d.shortnames[d.shortnames.length - 1] }))} />
 
 					<div className='flex items-center'>
-						<Image src={data.devices[0].icon.resolutions[0]} alt='Row View' className='w-6 h-6 mr-2' />
-						<Image src={data.devices[0].icon.resolutions[0]} alt='Grid View' className='w-6 h-6' />
+						<FaThLarge onClick={() => setViewMode('grid')} />
+						<FaList onClick={() => setViewMode('table')} />
 					</div>
 
 				</header>
