@@ -1,3 +1,14 @@
+type RadioEntry = {
+	gain: number;
+	maxPower: number;
+	maxSpeedMegabitsPerSecond: number;
+};
+
+type BioService = {
+	configured: string;
+	default: string;
+};
+
 type Device = {
 	sysids: Array<string>;
 	icon: {
@@ -25,6 +36,32 @@ type Device = {
 	};
 	shortnames: Array<string>;
 	triplets: Array<string>;
+	unifi?: {
+		adoptability: string;
+		network: {
+			bleServices: Array<BioService>;
+			chipset: string;
+			deviceCapabilities: Array<string>;
+			ethernetMaxSpeedMegabitsPerSecond: number;
+			features: {
+				bandsteer: boolean;
+				ax: boolean;
+				gen: number;
+			};
+			hybdrid: string;
+			minimumFirmwareRequired: number;
+			numberOfPorts: number;
+			ports: {
+				standard: number;
+			};
+			radios: {
+				na: RadioEntry;
+				ng: RadioEntry;
+			};
+			systemIdHexadecimal: string;
+			type: string;
+		};
+	};
 };
 
 type DeviceListProps = {

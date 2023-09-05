@@ -7,6 +7,7 @@ interface Props {
 	h?: number;
 }
 
+// TODO: Need to specify fallback for out of bounds resolution, such as 260
 const DeviceImage: React.FC<Props> = ({ device, w, h }) => {
 	let width: number, height: number;
 	if (w && h) {

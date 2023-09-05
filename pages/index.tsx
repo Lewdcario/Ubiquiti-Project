@@ -13,6 +13,7 @@ import SiteHead from '@/components/SiteHead';
 // TODO: Mobile + dark theme if I have time
 // TODO: Animate sideways transition between pages?
 // TODO: "4" and some other chars show up as a demo code for the font, maybe find an alternative or mention it in the interview
+// TODO: Consider apps directory, which will also change the 404 handling https://javascript.works-hub.com/learn/nextjs-version-13-whats-new-bbbd3
 
 export default function Home() {
 	const [searchTerm, setSearchTerm] = useState('');

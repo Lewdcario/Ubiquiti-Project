@@ -9,6 +9,7 @@ const colors = {
 	'grey-light-3': '#808893',
 	'grey-light-4': '#F4F5F6',
 	'grey-light-5': '#BDBDBD',
+	'gray-light-6': '#F9FAFA',
 	'blue-dark-2': '#0059CC',
 	dark: '#212327'
 };

@@ -8,7 +8,7 @@ interface Props {
 
 const Error: React.FC<Props> = ({ error }) => {
 	return (
-		<Card>
+		<Card className='mx-auto my-auto'>
 			<>
 				<BiSolidErrorAlt className='mx-auto' size='3rem' />
 				<div className='text-gray-900 font-bold text-xl mb-2'>

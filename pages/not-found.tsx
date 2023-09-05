@@ -8,7 +8,7 @@ import Card from '@/components/Card';
 export default function NotFound() {
 	return (
 		<Page>
-			<Card>
+			<Card className='mx-auto my-auto'>
 				<>
 					<BiSolidErrorAlt className='mx-auto' size='3rem' />
 					<div className='text-gray-900 font-bold text-xl mb-2'>
