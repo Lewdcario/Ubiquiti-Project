@@ -1,7 +1,7 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import Header from './Header';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
 	children: React.ReactNode;
 	theme?: 'light' | 'dark';
 }

@@ -6,10 +6,7 @@ interface Props {
 }
 
 const CustomAnchor: React.FC<Props> = ({ href, children }) => (
-	<a
-		href={href}
-		className='text-blue-dark-1 hover:text-blue-dark-2 focus:border focus:border-blue-dark-1 focus:my-2'
-	>
+	<a href={href} className='focus:border-blue-dark-1 focus:my-2'>
 		{children}
 	</a>
 );

@@ -3,14 +3,15 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { CiGrid41 } from 'react-icons/ci';
 import { BiSolidErrorAlt } from 'react-icons/bi';
-import TableLabel from '../components/TableLabel';
 import Search from '../components/Search';
-import Anchor from '../components/Anchor';
-import DeviceImage from '../components/DeviceImage';
 import Page from '../components/Page';
 import Icon from '../components/Icon';
+import Table from '../components/Table';
+import Grid from '../components/Grid';
 
-// TODO: Component and grid tables
+// TODO: Icons are broken in remote env
+// TODO: Mobile + dark theme if I have time
+// TODO: Animate sideways transition between pages?
 // TODO: "4" and some other chars show up as a demo code for the font, maybe find an alternative or mention it in the interview
 // TODO: Instead of server fetching, could use frontend and axios to use the progress bar... an then the stuff below this too
 // TODO: getStaticProps is deprecated / an anti-pattern now? https://javascript.works-hub.com/learn/nextjs-version-13-whats-new-bbbd3
@@ -79,7 +80,7 @@ export default function Home({
 	return (
 		<Page>
 			<div className='flex-1'>
-				<header className='flex justify-between items-center mb-8'>
+				<div className='flex justify-between items-center mb-8'>
 					<span className='flex space-x-4'>
 						<Search
 							searchTerm={searchTerm}
@@ -110,60 +111,13 @@ export default function Home({
 							/>
 						</Icon>
 					</div>
-				</header>
+				</div>
 
 				<main className='mt-10'>
 					{viewMode === 'table' ? (
-						<div className='h-[84.9vh] overflow-y-auto hide-scrollbar'>
-							<table className='table-auto w-full'>
-								<thead className='sticky top-0 bg-white'>
-									<tr>
-										<th className='w-[2%] sticky top-0'></th>
-										<th className='text-left w-[43%] sticky top-0'>
-											Product Line
-										</th>
-										<th className='text-left w-auto sticky top-0'>
-											Name
-										</th>
-									</tr>
-								</thead>
-								<tbody className='overflow-y-auto'>
-									{filteredDevices.map((device) => (
-										<tr key={device.id}>
-											<TableLabel>
-												<DeviceImage
-													device={device}
-													w={24}
-													h={24}
-												/>
-											</TableLabel>
-											<TableLabel>
-												{device.line.name}
-											</TableLabel>
-											<TableLabel>
-												<Anchor href='#'>
-													{device.product.name}
-												</Anchor>
-											</TableLabel>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
+						<Table devices={filteredDevices} />
 					) : (
-						<div className='grid grid-cols-3 gap-4'>
-							{filteredDevices.map((device) => (
-								<div key={device.id} className='card'>
-									<DeviceImage
-										device={device}
-										w={84}
-										h={84}
-									/>
-									<h3>{device.product.name}</h3>
-									<p>{device.line.name}</p>
-								</div>
-							))}
-						</div>
+						<Grid devices={filteredDevices} />
 					)}
 				</main>
 			</div>

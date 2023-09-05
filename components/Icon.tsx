@@ -1,6 +1,6 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
 	children: React.ReactNode;
 }
 
