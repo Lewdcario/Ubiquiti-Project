@@ -13,8 +13,8 @@ const DeviceImage: React.FC<Props> = ({ device, w, h }) => {
 		// Find closest match in device.icon.resolutions
 		[width, height] = device.icon.resolutions
 			.find((res: string[]) => {
-				const [w, h] = res.map((n: string) => Number(n));
-				return w >= w && h >= h;
+				const [resW, resH] = res.map((n: string) => Number(n));
+				return resW >= w && resH >= h;
 			})
 			?.map((n: string) => Number(n)) || [48, 48];
 	} else {
@@ -28,8 +28,8 @@ const DeviceImage: React.FC<Props> = ({ device, w, h }) => {
 		<Image
 			src={`https://static.ui.com/fingerprint/ui/icons/${device.icon.id}_${width}x${height}.png`}
 			alt={device.product.name}
-			width={width}
-			height={height}
+			width={w}
+			height={h}
 		/>
 	);
 };

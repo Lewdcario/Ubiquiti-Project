@@ -10,7 +10,7 @@ const TableLabel: React.FC<TableLabelProps> = ({
 	isHeader = false
 }) => {
 	const className =
-		'border-b-1 border-grey-light-2 hover:bg-grey-light-2 focus:border-t-1 focus:border-b-1 focus:border-blue-dark-1';
+		'border-b-2 border-grey-light-2 hover:bg-grey-light-2 focus:border-t-1 focus:border-b-1 focus:border-blue-dark-1 p-2';
 
 	return isHeader ? (
 		<th className={className}>{children}</th>
