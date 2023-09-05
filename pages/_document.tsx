@@ -5,7 +5,9 @@ class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang='en'>
-				<Head />
+				<Head>
+					<base href={`${process.env.NEXT_PUBLIC_BASE_PATH}/`} />
+				</Head>
 				<body>
 					<Main />
 					<NextScript />

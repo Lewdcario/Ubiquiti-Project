@@ -1,10 +1,10 @@
 import React from 'react';
-import Image from '@/components/Image';
+import Image from 'next/image';
 
 const Header: React.FC = () => (
 	<header className='bg-grey-light-4 h-18 flex justify-between items-center text-grey-light-3 p-5'>
 		<div className='flex items-center'>
-			<Image src='/logo.svg' width={24} height={24} alt='Logo' />
+			<Image src='logo.svg' width={24} height={24} alt='Logo' />
 			<span className='ml-5'>Devices</span>
 		</div>
 		<div>
@@ -16,7 +16,7 @@ const Header: React.FC = () => (
 			>
 				<span>okami.codes</span>
 				<Image
-					src='/github.svg'
+					src='github.svg'
 					width={24}
 					height={24}
 					alt='Github Logo'

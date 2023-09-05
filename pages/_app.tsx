@@ -7,7 +7,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { DeviceProvider } from '@/hooks/DeviceContext';
 import Error from '@/components/Error';
 
-// TODO: Meta tags and embeds
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 	return (
 		<>

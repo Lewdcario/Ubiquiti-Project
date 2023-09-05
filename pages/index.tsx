@@ -8,6 +8,7 @@ import Icon from '@/components/Icon';
 import Table from '@/components/Table';
 import Grid from '@/components/Grid';
 import Spinner from '@/components/Spinner';
+import SiteHead from '@/components/SiteHead';
 
 // TODO: Mobile + dark theme if I have time
 // TODO: Animate sideways transition between pages?
@@ -41,6 +42,7 @@ export default function Home() {
 
 	return (
 		<Page>
+			<SiteHead title='Devices' />
 			<div className='flex-1'>
 				<div className='flex justify-between items-center mb-8'>
 					<span className='flex space-x-4'>

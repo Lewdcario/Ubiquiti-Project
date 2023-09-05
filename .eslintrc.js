@@ -46,6 +46,10 @@ module.exports = {
 			}
 		],
 		'jsx-quotes': ['error', 'prefer-single'],
-		'@typescript-eslint/no-explicit-any': 'warn'
+		'@typescript-eslint/no-explicit-any': 'warn',
+		'react/jsx-curly-brace-presence': [
+			'error',
+			{ props: 'never', children: 'never' }
+		]
 	}
 };

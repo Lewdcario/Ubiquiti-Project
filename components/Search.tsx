@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, InputHTMLAttributes } from 'react';
-import Image from '@/components/Image';
+import Image from 'next/image';
 import { FaTimes } from 'react-icons/fa';
 
 interface Suggestion {
@@ -103,7 +103,7 @@ const Search: React.FC<SearchProps> = ({
 				/>
 				<div className='absolute left-2 top-1/2 transform -translate-y-1/2'>
 					<Image
-						src='/search.svg'
+						src='search.svg'
 						height={24}
 						width={24}
 						className='rounded'
