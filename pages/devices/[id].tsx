@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useDeviceData } from '@/hooks/DeviceContext';
 import Spinner from '@/components/Spinner';
 import Page from '@/components/Page';
@@ -7,8 +8,10 @@ interface Props {
 	id: string;
 }
 
-const DeviceView: React.FC<Props> = ({ id }) => {
-	const { data, loading, error } = useDeviceData();
+const DeviceView: React.FC<Props> = () => {
+	const { data, loading } = useDeviceData();
+	const router = useRouter();
+	const id = router.query.id as string;
 
 	if (loading) {
 		return (
@@ -18,13 +21,10 @@ const DeviceView: React.FC<Props> = ({ id }) => {
 		);
 	}
 
-	if (!data || error) {
-		return <p>:(</p>;
-	}
-
-	const device = data.devices.find((device) => device.id === id);
+	const device = data?.devices.find((device) => device.id === id);
 	if (!device) {
-		return <p>:((</p>;
+		router.push('/not-found');
+		return null;
 	}
 
 	return (

@@ -10,7 +10,7 @@ interface Props {
 const Page: React.FC<Props> = ({ children }) => (
 	<div className='h-screen bg-white'>
 		<Header />
-		<div className='flex py-4 px-10 overflow-hidden'>{children}</div>
+		<div className='py-4 px-10 overflow-hidden'>{children}</div>
 	</div>
 );
 

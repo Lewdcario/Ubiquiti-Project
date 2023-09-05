@@ -6,10 +6,10 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const CustomAnchor: React.FC<Props> = ({ href, children }) => (
+const Anchor: React.FC<Props> = ({ href, children }) => (
 	<div className='focus:border-blue-dark-1 focus:my-2'>
 		<Link href={href}>{children}</Link>
 	</div>
 );
 
-export default CustomAnchor;
+export default Anchor;
