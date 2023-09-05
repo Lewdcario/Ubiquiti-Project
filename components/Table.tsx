@@ -27,7 +27,9 @@ const Table: React.FC<Props> = ({ devices }) => (
 						</TableLabel>
 						<TableLabel>{device.line.name}</TableLabel>
 						<TableLabel>
-							<Anchor href='#'>{device.product.name}</Anchor>
+							<Anchor href={`/devices/${device.id}`}>
+								{device.product.name}
+							</Anchor>
 						</TableLabel>
 					</tr>
 				))}

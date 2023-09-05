@@ -4,4 +4,4 @@
 # https://github.com/yarnpkg/berry/issues/4095#issuecomment-1033869430
 PATH=$PATH:"/c/Program Files/Git/usr/bin"
 
-yarn && yarn format && yarn lint
+yarn && yarn precommit

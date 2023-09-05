@@ -23,7 +23,7 @@ const config: Config = {
 		extend: {
 			fontFamily: {
 				sans: ['Core Sans', 'sans-serif'],
-				'core-sans': ["'Core Sans'", 'sans-serif']
+				'core-sans': ['\'Core Sans\'', 'sans-serif']
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface Props {
 	href: string;
@@ -6,9 +7,9 @@ interface Props {
 }
 
 const CustomAnchor: React.FC<Props> = ({ href, children }) => (
-	<a href={href} className='focus:border-blue-dark-1 focus:my-2'>
-		{children}
-	</a>
+	<div className='focus:border-blue-dark-1 focus:my-2'>
+		<Link href={href}>{children}</Link>
+	</div>
 );
 
 export default CustomAnchor;

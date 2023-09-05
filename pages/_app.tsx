@@ -3,7 +3,11 @@ import '/public/globals.css';
 import React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { ErrorBoundary } from 'react-error-boundary';
+import { DeviceProvider } from '@/hooks/DeviceContext';
+import Error from '@/components/Error';
 
+// TODO: Meta tags and embeds
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 	return (
 		<>
@@ -15,7 +19,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 				/>
 				<meta name='HandheldFriendly' content='true' />
 			</Head>
-			<Component {...pageProps} />
+			<DeviceProvider>
+				<ErrorBoundary FallbackComponent={Error}>
+					<Component {...pageProps} />
+				</ErrorBoundary>
+			</DeviceProvider>
 		</>
 	);
 };
