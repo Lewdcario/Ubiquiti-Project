@@ -9,18 +9,22 @@ import Table from '@/components/Table';
 import Grid from '@/components/Grid';
 import Spinner from '@/components/Spinner';
 
-// TODO: Icons are broken in remote env
 // TODO: Mobile + dark theme if I have time
 // TODO: Animate sideways transition between pages?
 // TODO: "4" and some other chars show up as a demo code for the font, maybe find an alternative or mention it in the interview
-// TODO: Instead of server fetching, could use frontend and axios to use the progress bar... an then the stuff below this too
-// TODO: getStaticProps is deprecated / an anti-pattern now? https://javascript.works-hub.com/learn/nextjs-version-13-whats-new-bbbd3
-// TODO: Pagination + caching, think about speed and optimisation - https://nextjs.org/docs/app/building-your-application/data-fetching/patterns
 
 export default function Home() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 	const { data, loading } = useDeviceData();
+
+	if (loading) {
+		return (
+			<Page>
+				<Spinner />
+			</Page>
+		);
+	}
 
 	const filteredDevices =
 		data?.devices.filter((device) => {
@@ -34,14 +38,6 @@ export default function Home() {
 				`${deviceName} ${productName}`.includes(search)
 			);
 		}) || [];
-
-	if (loading) {
-		return (
-			<Page>
-				<Spinner />
-			</Page>
-		);
-	}
 
 	return (
 		<Page>
