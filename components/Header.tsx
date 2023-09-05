@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import Image from '@/components/Image';
 
 const Header: React.FC = () => (
 	<header className='bg-grey-light-4 h-18 flex justify-between items-center text-grey-light-3 p-5'>

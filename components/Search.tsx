@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, InputHTMLAttributes } from 'react';
-import Image from 'next/image';
+import Image from '@/components/Image';
 import { FaTimes } from 'react-icons/fa';
 
 interface Suggestion {
