@@ -1,9 +1,8 @@
-
 import React from 'react';
 
 interface Props {
-  href: string;
-  children: React.ReactNode;
+	href: string;
+	children: React.ReactNode;
 }
 
 const CustomAnchor: React.FC<Props> = ({ href, children }) => (
