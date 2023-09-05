@@ -1,78 +1,55 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { FaThLarge, FaList } from 'react-icons/fa';
+import { BiSolidErrorAlt } from 'react-icons/bi';
 import TableLabel from '../components/TableLabel';
 import Button from '../components/Button';
 import Search from '../components/Search';
 import Anchor from '../components/Anchor';
+import DeviceImage from '../components/DeviceImage';
 
-// TODO: Move typings out
-type Device = {
-	sysids: Array<string>;
-	icon: {
-		resolutions: Array<string>;
-		id: string;
-	};
-	line: {
-		name: string;
-		id: string;
-	};
-	guids: Array<string>;
-	uisp: {
-		nameLegacy: string;
-		bleServices: Array<string>;
-		line: string;
-		firmware: {
-			platform: string | null;
-			board: Array<string>;
-		};
-	};
-	id: string;
-	product: {
-		abbrev: string;
-		name: string;
-	};
-	shortnames: Array<string>;
-	triplets: Array<string>;
-};
-
-type DeviceListProps = {
-	data: {
-		version: string;
-		devices: Array<Device>;
-	};
-};
-
-// TODO: Handle errors
 // TODO: Pagination + caching, think about speed and optimisation
 // If the list changes more regularly then GetServerSideProps would be preferable here
 export const getStaticProps: GetStaticProps<DeviceListProps> = async () => {
-	const data = (await fetch(
-		'https://static.ui.com/fingerprint/ui/public.json'
-	).then((res) => res.json())) as DeviceListProps['data'];
-	return {
-		props: { data }
-	};
+	try {
+		const data = (await fetch(
+			'https://static.ui.com/fingerprint/ui/public.json'
+		).then((res) => res.json())) as DeviceListProps['data'];
+
+		return {
+			props: { data }
+		};
+	} catch (e: any) {
+		if (process.env.NODE_ENV === 'production') {
+			return { notFound: true }; // Excludes page from build
+		}
+
+		return { props: { error: e.message } };
+	}
 };
 
 // TODO: Use the themes better instead of manually applying classes - light and dark themes. dark: / light: selector might do it tho
 export default function Home({
-	data
+	data,
+	error
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
 	const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 	const itemsPerPage = 20;
 
-	// TODO: Filter isn't working on click
-	const filteredDevices = data.devices.filter(
-		(device) =>
-			device.product.name
-				.toLowerCase()
-				.includes(searchTerm.toLowerCase()) ||
-			device.line.name.toLowerCase().includes(searchTerm.toLowerCase())
-	);
+	const filteredDevices =
+		data?.devices.filter((device) => {
+			const search = searchTerm.toLowerCase();
+			const productName = device.product.name.toLowerCase();
+			const deviceName =
+				device.shortnames[device.shortnames.length - 1].toLowerCase();
+			return (
+				deviceName.includes(search) ||
+				deviceName.toLowerCase().includes(search) ||
+				`${deviceName} ${productName}`.includes(search)
+			);
+		}) || [];
 
 	const pageCount = Math.ceil(filteredDevices.length / itemsPerPage);
 	const devicesToShow = filteredDevices.slice(
@@ -80,17 +57,27 @@ export default function Home({
 		currentPage * itemsPerPage
 	);
 
-	// TODO: handle the icon schema changing. Maybe provide a max for the icon wxh and find that in the resolutions array, then default to the first one
-	const imgURL = (device: Device) =>
-		`https://static.ui.com/fingerprint/ui/icons/${device.icon.id}_${device.icon.resolutions[1][0]}x${device.icon.resolutions[1][1]}.png`;
-	const image = (device: Device, w: number, h: number) => (
-		<Image
-			src={imgURL(device)}
-			alt={device.product.name}
-			width={w}
-			height={h}
-		/>
-	);
+	if (!data || error) {
+		return (
+			<div className='flex h-screen bg-gray-100'>
+				<div className='w-[20rem] drop-shadow-lg mx-auto my-auto'>
+					<div className='h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden'></div>
+					<div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal'>
+						<div className='mb-8 text-center'>
+							<BiSolidErrorAlt className='mx-auto' size='3rem' />
+							<div className='text-gray-900 font-bold text-xl mb-2'>
+								There was an error...
+							</div>
+							<p className='text-gray-700 text-base'>
+								{error ||
+									'Something went wrong loading the page.'}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='flex h-screen bg-gray-100'>
@@ -100,8 +87,8 @@ export default function Home({
 						searchTerm={searchTerm}
 						setSearchTerm={setSearchTerm}
 						suggestions={data.devices.map((d) => ({
-							deviceName: d.product.name,
-							productName: d.shortnames[d.shortnames.length - 1]
+							productName: d.product.name,
+							deviceName: d.shortnames[d.shortnames.length - 1]
 						}))}
 					/>
 
@@ -125,7 +112,11 @@ export default function Home({
 								{devicesToShow.map((device) => (
 									<tr key={device.id}>
 										<TableLabel>
-											{image(device, 24, 24)}
+											<DeviceImage
+												device={device}
+												w={24}
+												h={24}
+											/>
 										</TableLabel>
 										<TableLabel>
 											{device.line.name}
@@ -143,7 +134,11 @@ export default function Home({
 						<div className='grid grid-cols-3 gap-4'>
 							{devicesToShow.map((device) => (
 								<div key={device.id} className='card'>
-									{image(device, 48, 48)}
+									<DeviceImage
+										device={device}
+										w={48}
+										h={48}
+									/>
 									<h3>{device.product.name}</h3>
 									<p>{device.line.name}</p>
 								</div>

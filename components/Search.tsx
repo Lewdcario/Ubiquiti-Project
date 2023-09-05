@@ -65,15 +65,15 @@ const Search: React.FC<SearchProps> = ({
 	};
 
 	const renderSuggestion = (suggestion: Suggestion, query: string) => {
-		const matchIndex = suggestion.deviceName
+		const matchIndex = suggestion.productName
 			.toLowerCase()
 			.indexOf(query.toLowerCase());
-		const prefix = suggestion.deviceName.slice(0, matchIndex);
-		const match = suggestion.deviceName.slice(
+		const prefix = suggestion.productName.slice(0, matchIndex);
+		const match = suggestion.productName.slice(
 			matchIndex,
 			matchIndex + query.length
 		);
-		const suffix = suggestion.deviceName.slice(matchIndex + query.length);
+		const suffix = suggestion.productName.slice(matchIndex + query.length);
 
 		return (
 			<div className='inline-flex justify-between w-full'>
@@ -83,7 +83,7 @@ const Search: React.FC<SearchProps> = ({
 					{suffix}
 				</span>
 				<span className='text-right text-grey-light-3'>
-					{suggestion.productName}
+					{suggestion.deviceName}
 				</span>
 			</div>
 		);

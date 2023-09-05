@@ -45,6 +45,7 @@ module.exports = {
 				after: true
 			}
 		],
-		'jsx-quotes': ['error', 'prefer-single']
+		'jsx-quotes': ['error', 'prefer-single'],
+		'@typescript-eslint/no-explicit-any': 'warn'
 	}
 };
