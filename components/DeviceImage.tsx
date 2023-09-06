@@ -5,10 +5,11 @@ interface Props {
 	device: Device;
 	w?: number;
 	h?: number;
+	className?: string;
 }
 
 // TODO: Need to specify fallback for out of bounds resolution, such as 260
-const DeviceImage: React.FC<Props> = ({ device, w, h }) => {
+const DeviceImage: React.FC<Props> = ({ device, w, h, className }) => {
 	let width: number, height: number;
 	if (w && h) {
 		// Find closest match in device.icon.resolutions
@@ -31,6 +32,7 @@ const DeviceImage: React.FC<Props> = ({ device, w, h }) => {
 			alt={device.product.name}
 			width={w}
 			height={h}
+			className={className}
 		/>
 	);
 };
