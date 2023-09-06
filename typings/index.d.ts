@@ -71,3 +71,8 @@ type DeviceListProps = {
 	};
 	error?: message;
 };
+
+interface Suggestion {
+	deviceName: string;
+	productName: string;
+}

@@ -11,7 +11,9 @@ const colors = {
 	'grey-light-5': '#BDBDBD',
 	'grey-light-6': '#F9FAFA',
 	'blue-dark-2': '#0059CC',
-	dark: '#212327'
+	dark: '#212327',
+	'red-dark-1': '#F03A3E',
+	'red-light-1': '#F9B0B2'
 };
 
 const config: Config = {

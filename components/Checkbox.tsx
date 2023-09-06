@@ -2,15 +2,20 @@ import React from 'react';
 
 interface Props {
 	label: string;
+	checked: boolean;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	className?: string;
 }
 
-const Checkbox: React.FC<Props> = ({ label }) => (
-	<div className='flex items-center'>
+const Checkbox: React.FC<Props> = ({ label, checked, onChange, className }) => (
+	<div className='flex items-center space-x-3'>
 		<input
 			type='checkbox'
-			className='rounded-full border-1 border-grey-light-1 hover:border-blue-dark-1 focus:ring focus:ring-blue-dark-1 focus:ring-offset-1'
+			className={`border-1 border-grey-light-1 hover:bg-blue-dark-1 rounded-lg ${className}`}
+			checked={checked}
+			onChange={onChange}
 		/>
-		<label className='ml-auto'>{label}</label>
+		<label className='text-grey-dark-2'>{label}</label>
 	</div>
 );
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { CiGrid41 } from 'react-icons/ci';
 import { useDeviceData } from '@/hooks/DeviceContext';
@@ -9,26 +9,23 @@ import Table from '@/components/Table';
 import Grid from '@/components/Grid';
 import Spinner from '@/components/Spinner';
 import SiteHead from '@/components/SiteHead';
-
-// TODO: Mobile + dark theme if I have time
-// TODO: Animate sideways transition between pages?
-// TODO: "4" and some other chars show up as a demo code for the font, maybe find an alternative or mention it in the interview
-// TODO: Consider apps directory, which will also change the 404 handling https://javascript.works-hub.com/learn/nextjs-version-13-whats-new-bbbd3
+import CheckboxDropdown from '@/components/CheckboxDropdown';
 
 export default function Home() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 	const { data, loading } = useDeviceData();
+	const [checkedLines, setCheckedLines] = useState<Record<string, boolean>>(
+		{}
+	);
 
-	if (loading) {
-		return (
-			<Page>
-				<Spinner />
-			</Page>
-		);
-	}
+	const updateFilteredDevices = (newCheckedLines: {
+		[key: string]: boolean;
+	}) => {
+		setCheckedLines(newCheckedLines);
+	};
 
-	const filteredDevices =
+	const baseFilteredDevices =
 		data?.devices.filter((device) => {
 			const search = searchTerm.toLowerCase();
 			const productName = device.product.name.toLowerCase();
@@ -40,6 +37,36 @@ export default function Home() {
 				`${deviceName} ${productName}`.includes(search)
 			);
 		}) || [];
+
+	const allUnticked = Object.values(checkedLines).every(
+		(val) => val === false
+	);
+	const filteredDevices = baseFilteredDevices.filter((device) => {
+		if (allUnticked) return true;
+		return checkedLines[device.line.name];
+	});
+
+	const productLines = Array.from(
+		new Set(baseFilteredDevices.map((device) => device.line.name) || [])
+	);
+
+	useEffect(() => {
+		if (data) {
+			const initialCheckedLines: Record<string, boolean> = {};
+			data.devices.forEach((device) => {
+				initialCheckedLines[device.line.name] = true;
+			});
+			setCheckedLines(initialCheckedLines);
+		}
+	}, [data]);
+
+	if (loading) {
+		return (
+			<Page>
+				<Spinner />
+			</Page>
+		);
+	}
 
 	return (
 		<Page>
@@ -63,8 +90,7 @@ export default function Home() {
 							{filteredDevices.length} Devices
 						</div>
 					</span>
-
-					<div className='flex items-center space-x-1'>
+					<div className='flex items-center space-x-1 text-grey-dark-1'>
 						<Icon>
 							<AiOutlineUnorderedList
 								size='20px'
@@ -77,6 +103,11 @@ export default function Home() {
 								onClick={() => setViewMode('grid')}
 							/>
 						</Icon>
+						<CheckboxDropdown
+							title='Filter'
+							items={productLines}
+							onChange={updateFilteredDevices}
+						/>
 					</div>
 				</div>
 
