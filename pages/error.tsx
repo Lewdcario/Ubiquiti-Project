@@ -5,7 +5,6 @@ import Error from '@/components/Error';
 
 const ErrorPage: React.FC = () => {
 	const { error } = useDeviceData();
-
 	return (
 		<Page>
 			<Error error={error} />
