@@ -1,12 +1,8 @@
-/**
- * @jest-environment jsdom
- */
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { DeviceProvider } from '@/hooks/DeviceContext';
 import Home from '@/pages/index';
-import '@testing-library/jest-dom';
 
 jest.mock('next/router', () => ({
 	useRouter: jest.fn()
