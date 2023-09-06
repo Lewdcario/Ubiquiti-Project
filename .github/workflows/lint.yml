@@ -6,7 +6,7 @@ on:
       - public/*
       - src/**
       - .github/workflows/*
-    branches: [main]
+    branches: [master]
 
 jobs:
   deploy:
