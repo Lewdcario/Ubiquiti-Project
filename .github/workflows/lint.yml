@@ -3,8 +3,12 @@ name: Lint & Test
 on:
   push:
     paths:
+      - __tests__/**
       - public/*
-      - src/**
+      - pages/**
+      - hooks/*
+      - components/*
+      - typings/*
       - .github/workflows/*
     branches: [master]
 
