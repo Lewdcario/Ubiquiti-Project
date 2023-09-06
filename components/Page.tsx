@@ -6,7 +6,6 @@ interface Props {
 	theme?: 'light' | 'dark';
 }
 
-// TODO: Use the theme prop instead of manually applying classes - light and dark themes. dark: / light: selector might do it tho
 const Page: React.FC<Props> = ({ children }) => (
 	<div className='h-screen bg-white'>
 		<Header />

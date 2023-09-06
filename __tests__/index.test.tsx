@@ -9,7 +9,7 @@ jest.mock('next/router', () => ({
 }));
 
 describe('Home', () => {
-	it('renders a heading', () => {
+	it('renders the Home page', () => {
 		(useRouter as jest.Mock).mockReturnValue({
 			route: '/'
 		});
