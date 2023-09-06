@@ -105,7 +105,7 @@ const DeviceView = () => {
 
 				<Card className='mx-auto my-auto w-[736px] p-0 border-0 drop-shadow-none'>
 					<div className='flex w-full'>
-						<div className='w-[40%] bg-gray-light-6'>
+						<div className='w-[40%] bg-grey-light-6'>
 							<DeviceImage device={device} w={250} h={250} />
 						</div>
 						<div className='w-[100%] ml-5'>

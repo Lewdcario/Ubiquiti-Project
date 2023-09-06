@@ -30,10 +30,13 @@ const Card: React.FC<CardProps> & {
 } = ({ children, className }) => (
 	<div
 		className={cx(
-			'w-[20rem] m-2 border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal',
+			'bg-white flex flex-col justify-between leading-normal rounded',
+			!className?.includes('w-') && 'w-[20rem]',
 			!className?.includes('p-') && 'p-4',
+			!className?.includes('m-') && 'm-2',
 			!className?.includes('border-') && 'border-2',
 			!className?.includes('drop-shadow') && 'drop-shadow-lg',
+			!className?.includes('border-') && 'border-gray-400', // I recognise instead we should check for numbers or arbitrary values
 			className
 		)}
 	>
